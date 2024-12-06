@@ -1,80 +1,34 @@
-![reactjs-vite-tailwindcss-boilerplate](https://user-images.githubusercontent.com/16243531/217138979-b854309c-4742-4275-a705-f9fec5158217.jpg)
+# Crypto App
 
-# React Tailwindcss Boilerplate build with Vite
+This app allows users to view and interact with cryptocurrency data. It fetches real-time information about cryptocurrencies, including their current price and 24-hour percentage change, from the [CoinMarketCap API](https://coinmarketcap.com/api/).
 
-This is a boilerplate build with Vite, React 18, TypeScript, Vitest, Testing Library, TailwindCSS 3, Eslint and Prettier.
+## Tools and Technologies
 
-## What is inside?
+This project uses the following tools:
 
-This project uses many tools like:
+- [Vite](https://vitejs.dev) - Fast build tool for modern web applications.
+- [ReactJS](https://reactjs.org) - JavaScript library for building user interfaces.
+- [TypeScript](https://www.typescriptlang.org) - Superset of JavaScript that adds static typing.
+- [Axios](https://axios-http.com) - Promise-based HTTP client for the browser and Node.js.
+- [Vitest](https://vitest.dev) - A fast testing framework for unit and integration tests.
+- [Testing Library](https://testing-library.com) - Library for writing tests that resemble how the app is used.
+- [TailwindCSS](https://tailwindcss.com) - Utility-first CSS framework for rapid UI development.
+- [ESLint](https://eslint.org) - Linting tool to ensure consistent coding style.
+- [Prettier](https://prettier.io) - Code formatter for maintaining consistent style.
 
-- [Vite](https://vitejs.dev)
-- [ReactJS](https://reactjs.org)
-- [TypeScript](https://www.typescriptlang.org)
-- [Vitest](https://vitest.dev)
-- [Testing Library](https://testing-library.com)
-- [Tailwindcss](https://tailwindcss.com)
-- [Eslint](https://eslint.org)
-- [Prettier](https://prettier.io)
+## API Used
+
+This app fetches cryptocurrency data from the [CoinMarketCap API](https://coinmarketcap.com/api/), providing real-time price and market information.
 
 ## Getting Started
 
-### Install
+To get started with the app, follow these steps:
 
-Create the project.
-
-```bash
-pnpm dlx degit joaopaulomoraes/reactjs-vite-tailwindcss-boilerplate my-app
-```
-
-Access the project directory.
-
-```bash
-cd my-app
-```
-
-Install dependencies.
-
-```bash
-pnpm install
-```
-
-Serve with hot reload at <http://localhost:5173>.
-
-```bash
-pnpm run dev
-```
-
-### Lint
-
-```bash
-pnpm run lint
-```
-
-### Typecheck
-
-```bash
-pnpm run typecheck
-```
-
-### Build
-
-```bash
-pnpm run build
-```
-
-### Test
-
-```bash
-pnpm run test
-```
-
-View and interact with your tests via UI.
-
-```bash
-pnpm run test:ui
-```
+1. Clone the repository.
+2. Install the dependencies: `pnpm install`
+3. Run the development server: `pnpm run dev`
+4. Open your browser and navigate to `http://localhost:5173`
 
 ## License
 
-This project is licensed under the MIT License.
+This project does not have a specific license.
