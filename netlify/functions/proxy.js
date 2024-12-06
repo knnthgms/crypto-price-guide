@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 
-const API_KEY = import.meta.env.VITE_COINMARKETCAP_API_KEY
+const API_KEY = process.env.VITE_COINMARKETCAP_API_KEY
 const BASE_URL = 'https://pro-api.coinmarketcap.com/v1'
 
 exports.handler = async (event) => {
