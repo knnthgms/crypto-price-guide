@@ -16,6 +16,7 @@ interface DisplayCurrencyType {
   code: string
   symbol: string
 }
+
 interface CryptoContextType {
   currency: DisplayCurrencyType
   searchTerm: string
@@ -66,6 +67,7 @@ export const CryptoProvider: React.FC<CryptoProviderProps> = ({ children }) => {
       value={{
         recentSearches,
         setSearchTerm,
+        searchTerm,
         currency: displayCurrency,
         setCurrency: setDisplayCurrency,
         filteredCryptocurrencies,

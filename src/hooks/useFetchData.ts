@@ -7,7 +7,7 @@ export const useCryptocurrency = (displayCurrency: string) => {
     ListingsResponseData[]
   >([])
   const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<Error | null>(null)
 
   const loadTopCryptocurrencies = useCallback(async () => {
     setLoading(true)
@@ -15,9 +15,12 @@ export const useCryptocurrency = (displayCurrency: string) => {
     try {
       const data = await fetchTopCryptocurrencies(50, displayCurrency)
       setCryptocurrencies(data)
-      // setCryptocurrencies(mockdata.data)
     } catch (err) {
-      setError('Failed to fetch cryptocurrencies')
+      if (err instanceof Error) {
+        setError(err)
+      } else {
+        setError(new Error('An unknown error occurred'))
+      }
     } finally {
       setLoading(false)
     }
@@ -25,7 +28,8 @@ export const useCryptocurrency = (displayCurrency: string) => {
 
   useEffect(() => {
     loadTopCryptocurrencies()
-  }, [displayCurrency, loadTopCryptocurrencies])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayCurrency])
 
   return {
     cryptocurrencies,
