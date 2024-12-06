@@ -1,4 +1,10 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react'
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useMemo,
+  useState
+} from 'react'
 import { useCryptocurrency } from 'hooks/useFetchData'
 import { ListingsResponseData } from 'api/types'
 
@@ -8,10 +14,13 @@ interface CryptoProviderProps {
 
 interface CryptoContextType {
   currency: string
+  searchTerm: string
+  setSearchTerm: (searchTerm: string) => void
   setCurrency: (currency: string) => void
   recentSearches: string[]
   addRecentSearch: (search: string) => void
   cryptocurrencies: ListingsResponseData[]
+  filteredCryptocurrencies: ListingsResponseData[]
   loading: boolean
   error: Error | null
 }
@@ -19,10 +28,21 @@ interface CryptoContextType {
 const CryptoContext = createContext<CryptoContextType | undefined>(undefined)
 
 export const CryptoProvider: React.FC<CryptoProviderProps> = ({ children }) => {
-  const [currency, setCurrency] = useState<string>('USD')
+  const [searchTerm, setSearchTerm] = useState('')
   const [recentSearches, setRecentSearches] = useState<string[]>([])
 
   const { cryptocurrencies, loading, error } = useCryptocurrency()
+
+  const filteredCryptocurrencies = useMemo(() => {
+    if (!searchTerm.trim()) return cryptocurrencies
+
+    const lowercasedSearchTerm = searchTerm.toLowerCase()
+    return cryptocurrencies.filter(
+      (crypto) =>
+        crypto.name.toLowerCase().includes(lowercasedSearchTerm) ||
+        crypto.symbol.toLowerCase().includes(lowercasedSearchTerm)
+    )
+  }, [searchTerm, cryptocurrencies])
 
   const addRecentSearch = (search: string) => {
     setRecentSearches((prev) => {
@@ -31,12 +51,15 @@ export const CryptoProvider: React.FC<CryptoProviderProps> = ({ children }) => {
     })
   }
 
+  const searchUsed = filteredCryptocurrencies.length > 0
+
   return (
     <CryptoContext.Provider
       value={{
-        currency,
-        setCurrency,
         recentSearches,
+        searchUsed,
+        setSearchTerm,
+        filteredCryptocurrencies,
         addRecentSearch,
         cryptocurrencies,
         loading,

@@ -1,7 +1,12 @@
+import React from 'react'
 import { useCrypto } from 'context/CryptoProvider'
 
 const SearchBar = () => {
-  const { cryptocurrencies, currency, setCurrency } = useCrypto()
+  const { searchTerm, setSearchTerm, loading } = useCrypto()
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value)
+  }
 
   return (
     <form className="w-full max-w-md space-y-4">
@@ -9,22 +14,17 @@ const SearchBar = () => {
         Search for Cryptocurrency
       </label>
       <input
-        type="search"
-        placeholder="Search for currency"
-        className="w-full rounded-md border border-gray-300 p-4 text-lg text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        type="text"
+        value={searchTerm}
+        onChange={handleInputChange}
+        disabled={loading}
+        placeholder="Search for cryptocurrency"
+        className={`w-full rounded-md border p-4 text-lg shadow-sm focus:ring-2 ${
+          loading
+            ? 'cursor-not-allowed bg-gray-200 text-gray-500'
+            : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+        }`}
       />
-      <select
-        value={currency}
-        onChange={(e) => setCurrency(e.target.value)}
-        className="w-full rounded-md border border-gray-300 p-4 text-lg text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-      >
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="GBP">GBP</option>
-      </select>
-      <p className="text-sm text-gray-500">
-        {cryptocurrencies.length} cryptocurrencies available.
-      </p>
     </form>
   )
 }

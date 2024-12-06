@@ -2,6 +2,7 @@ import StatusMessage from './StatusMessage'
 import SearchBar from './SearchBar'
 import RecentSearches from './RecentSearches'
 import { CryptoProvider } from 'context/CryptoProvider'
+import CurrencyList from './CurrencyList'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <div className="relative flex min-h-screen flex-col items-center justify-center space-y-8 bg-gray-100 p-6">
         <StatusMessage />
         <SearchBar />
+        <CurrencyList />
         <RecentSearches />
       </div>
     </CryptoProvider>
