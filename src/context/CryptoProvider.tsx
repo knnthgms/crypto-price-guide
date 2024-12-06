@@ -1,7 +1,9 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react'
+import { useCryptocurrency } from 'hooks/useFetchData'
+import { ListingsResponseData } from 'api/types'
 
-interface ContextChildren {
-  children?: ReactNode
+interface CryptoProviderProps {
+  children: ReactNode
 }
 
 interface CryptoContextType {
@@ -9,13 +11,18 @@ interface CryptoContextType {
   setCurrency: (currency: string) => void
   recentSearches: string[]
   addRecentSearch: (search: string) => void
+  cryptocurrencies: ListingsResponseData[]
+  loading: boolean
+  error: Error | null
 }
 
 const CryptoContext = createContext<CryptoContextType | undefined>(undefined)
 
-export const CryptoProvider: React.FC = ({ children }: ContextChildren) => {
+export const CryptoProvider: React.FC<CryptoProviderProps> = ({ children }) => {
   const [currency, setCurrency] = useState<string>('USD')
   const [recentSearches, setRecentSearches] = useState<string[]>([])
+
+  const { cryptocurrencies, loading, error } = useCryptocurrency()
 
   const addRecentSearch = (search: string) => {
     setRecentSearches((prev) => {
@@ -26,7 +33,15 @@ export const CryptoProvider: React.FC = ({ children }: ContextChildren) => {
 
   return (
     <CryptoContext.Provider
-      value={{ currency, setCurrency, recentSearches, addRecentSearch }}
+      value={{
+        currency,
+        setCurrency,
+        recentSearches,
+        addRecentSearch,
+        cryptocurrencies,
+        loading,
+        error
+      }}
     >
       {children}
     </CryptoContext.Provider>

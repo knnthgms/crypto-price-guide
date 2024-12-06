@@ -313,7 +313,6 @@ export const useCryptocurrency = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Fetch top cryptocurrencies
   const loadTopCryptocurrencies = async () => {
     setLoading(true)
     setError(null)
@@ -328,7 +327,6 @@ export const useCryptocurrency = () => {
     }
   }
 
-  // Fetch price conversion
   const convertCurrency = async (
     amount: number,
     fromCurrency: string,
