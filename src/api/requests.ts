@@ -1,23 +1,21 @@
 import axios from 'axios'
 import { ListingsResponseData } from './types'
-const API_KEY = import.meta.env.VITE_COINMARKETCAP_API_KEY
 
 const cmcApi = axios.create({
-  baseURL: 'https://pro-api.coinmarketcap.com/v1',
+  baseURL: '/api',
   headers: {
-    'X-CMC_PRO_API_KEY': API_KEY,
     Accept: 'application/json',
     'Accept-Encoding': 'deflate, gzip'
   }
 })
 
 export const fetchTopCryptocurrencies = async (
-  limit: number = 50,
-  convert: string = 'USD'
+  limit = 50,
+  convert = 'USD'
 ): Promise<ListingsResponseData[]> => {
   try {
-    const response = await cmcApi.get(`/cryptocurrency/listings/latest`, {
-      params: { limit, convert }
+    const response = await cmcApi.get('/', {
+      params: { endpoint: 'cryptocurrency/listings/latest', limit, convert }
     })
     return response.data.data
   } catch (error) {
