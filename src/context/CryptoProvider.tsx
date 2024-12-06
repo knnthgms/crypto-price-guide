@@ -12,11 +12,15 @@ interface CryptoProviderProps {
   children: ReactNode
 }
 
+interface DisplayCurrencyType {
+  code: string
+  symbol: string
+}
 interface CryptoContextType {
-  currency: string
+  currency: DisplayCurrencyType
   searchTerm: string
   setSearchTerm: (searchTerm: string) => void
-  setCurrency: (currency: string) => void
+  setCurrency: (currency: DisplayCurrencyType) => void
   recentSearches: string[]
   addRecentSearch: (search: string) => void
   cryptocurrencies: ListingsResponseData[]
@@ -30,8 +34,14 @@ const CryptoContext = createContext<CryptoContextType | undefined>(undefined)
 export const CryptoProvider: React.FC<CryptoProviderProps> = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [recentSearches, setRecentSearches] = useState<string[]>([])
+  const [displayCurrency, setDisplayCurrency] = useState<DisplayCurrencyType>({
+    code: 'USD',
+    symbol: '$'
+  })
 
-  const { cryptocurrencies, loading, error } = useCryptocurrency()
+  const { cryptocurrencies, loading, error } = useCryptocurrency(
+    displayCurrency.code
+  )
 
   const filteredCryptocurrencies = useMemo(() => {
     if (!searchTerm.trim()) return cryptocurrencies
@@ -51,14 +61,13 @@ export const CryptoProvider: React.FC<CryptoProviderProps> = ({ children }) => {
     })
   }
 
-  const searchUsed = filteredCryptocurrencies.length > 0
-
   return (
     <CryptoContext.Provider
       value={{
         recentSearches,
-        searchUsed,
         setSearchTerm,
+        currency: displayCurrency,
+        setCurrency: setDisplayCurrency,
         filteredCryptocurrencies,
         addRecentSearch,
         cryptocurrencies,

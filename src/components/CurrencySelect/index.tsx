@@ -1,30 +1,57 @@
 import { useCrypto } from 'context/CryptoProvider'
-import React from 'react'
+
+interface Currency {
+  code: string
+  symbol: string
+}
 
 const CurrencySelect = () => {
-  const { cryptocurrencies, currency, setCurrency } = useCrypto()
+  const { currency, setCurrency } = useCrypto()
+
+  const availableCurrencies: Currency[] = [
+    { code: 'USD', symbol: '$' },
+    { code: 'EUR', symbol: '€' },
+    { code: 'GBP', symbol: '£' },
+    { code: 'JPY', symbol: '¥' },
+    { code: 'AUD', symbol: 'A$' },
+    { code: 'CAD', symbol: 'C$' },
+    { code: 'CHF', symbol: 'Fr' },
+    { code: 'CNY', symbol: '¥' },
+    { code: 'INR', symbol: '₹' },
+    { code: 'MXN', symbol: '$' },
+    { code: 'BRL', symbol: 'R$' }
+  ]
+
+  const filteredCurrencies = availableCurrencies.filter(
+    (cur) => cur.code !== currency.code
+  )
+
+  const onSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCurrency = availableCurrencies.find(
+      (cur) => cur.code === e.target.value
+    )
+    if (selectedCurrency) {
+      setCurrency(selectedCurrency)
+    }
+  }
+
   return (
-    <>
-      <label
-        htmlFor="currency"
-        className="block text-lg font-bold text-gray-700"
-      >
-        Select an option
-      </label>
-      <select
-        id="currency"
-        value={currency}
-        onChange={(e) => setCurrency(e.target.value)}
-        className="w-full rounded-md border border-gray-300 p-4 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-      >
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="GBP">GBP</option>
-      </select>
-      <p className="text-sm text-gray-500">
-        {cryptocurrencies.length} cryptocurrencies available.
-      </p>
-    </>
+    <select
+      id="currency"
+      value={currency.code}
+      onChange={onSelect}
+      aria-label="Currency select"
+      className="mt-1 rounded-md border p-2"
+    >
+      <option value={currency.code} disabled>
+        {currency.code} ({currency.symbol})
+      </option>
+      {filteredCurrencies.map((cur) => (
+        <option key={cur.code} value={cur.code}>
+          {cur.code} ({cur.symbol})
+        </option>
+      ))}
+    </select>
   )
 }
 

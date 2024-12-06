@@ -2,7 +2,7 @@ import CurrencyItem from 'components/CurrencyItem'
 import { useCrypto } from 'context/CryptoProvider'
 
 const CurrencyList = () => {
-  const { filteredCryptocurrencies, addRecentSearch } = useCrypto()
+  const { filteredCryptocurrencies, addRecentSearch, currency } = useCrypto()
 
   const onSelectItem = (name: string) => {
     addRecentSearch(name)
@@ -17,13 +17,14 @@ const CurrencyList = () => {
           <div className="text-right">24H Change</div>
         </div>
       </div>
-      {filteredCryptocurrencies.length > 0 ? (
+      {filteredCryptocurrencies?.length > 0 ? (
         <ul>
           {filteredCryptocurrencies.map((item) => (
             <CurrencyItem
               key={item.id}
               data={item}
               onSelect={() => onSelectItem(item.name)}
+              currency={currency}
             />
           ))}
         </ul>
