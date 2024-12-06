@@ -5,7 +5,7 @@ const StatusMessage = () => {
 
   if (loading) {
     return (
-      <p className="animate-pulse text-lg font-semibold text-blue-600">
+      <p className="animate-pulse text-sm font-semibold text-blue-600">
         Fetching data...
       </p>
     )
@@ -13,14 +13,14 @@ const StatusMessage = () => {
 
   if (error) {
     return (
-      <p className="text-lg font-semibold text-red-600">
+      <p className="text-sm font-semibold text-red-600">
         Error fetching data: {error.message}
       </p>
     )
   }
 
   return (
-    <p className="text-lg font-semibold text-green-600">
+    <p className="text-sm font-semibold text-green-600">
       Data loaded successfully!
     </p>
   )
