@@ -1,10 +1,13 @@
+import { useState } from 'react'
 import CurrencyItem from 'components/CurrencyItem'
 import { useCrypto } from 'context/CryptoProvider'
 
 const CurrencyList = () => {
   const { filteredCryptocurrencies, addRecentSearch, currency } = useCrypto()
+  const [selectedCurrency, setSelectedCurrency] = useState<string | null>(null)
 
   const onSelectItem = (name: string) => {
+    setSelectedCurrency((prev) => (prev === name ? null : name))
     addRecentSearch(name)
   }
 
@@ -24,6 +27,7 @@ const CurrencyList = () => {
               key={item.id}
               data={item}
               onSelect={() => onSelectItem(item.name)}
+              isSelected={selectedCurrency === item.name}
               currency={currency}
             />
           ))}
